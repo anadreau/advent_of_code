@@ -5,6 +5,8 @@ import 'dart:io' as io;
 import 'package:advent_2022/day3/rucksack_model.dart';
 
 int finalSum = 0;
+int ruckId = 1;
+List ruckList = <RuckSack>[];
 
 //read the file
 
@@ -12,7 +14,6 @@ final file = io.File('lib/data/rucksack.txt');
 
 //Read rps.txt file by line
 void readRuckFile() async {
-  int ruckId = 1;
   Stream<String> lines =
       file.openRead().transform(utf8.decoder).transform(LineSplitter());
 
@@ -23,17 +24,21 @@ void readRuckFile() async {
       int lineMiddle = (linelength ~/ 2);
       var compartment1 = line.substring(0, (linelength ~/ 2));
       var compartment2 = line.substring(lineMiddle, linelength);
-      log('Compartment1 contains: $compartment1\nCompartment2 contains: $compartment2');
+      //log('Compartment1 contains: $compartment1\nCompartment2 contains: $compartment2');
       String letter = _compareCompartments(compartment1, compartment2);
       RuckSack ruck = RuckSack(
           ruckId: ruckId,
           matchingLetter: letter,
           score: _calculateLetterScore(letter));
-      log('$ruck');
+      ruckList.add(ruck);
+      ruckId++;
+      //log('$ruck');
     }
   } catch (e) {
     log('$e');
   }
+
+  _calculateTotalScore();
 }
 
 //compare both strings for matching characters
@@ -44,14 +49,22 @@ String _compareCompartments(String compartment1, String compartment2) {
   int y;
   var list1 = compartment1.split('');
   var list2 = compartment2.split('');
+  var list1Length = list1.length;
+  var list2Length = list2.length;
+  //log('${list1.length}');
+  //log('${list2.length}');
 
-  for (i = 0; i < list1.length; i++) {
-    for (y = 0; y < list2.length; y++) {}
-    if (list1[i] == list2[y]) {
-      matchingLetter = list1[i];
+  for (i = 0; i < list1Length; i++) {
+    //log('i is $i');
+    for (y = 0; y < list2Length; y++) {
+      //log('y is $y');
+      //log('list1 at i is ${list1[i]} and list 2 at y is ${list2[y]}');
+      if (list1[i] == list2[y]) {
+        matchingLetter = list1[i];
+      }
     }
   }
-
+  log(matchingLetter);
   return matchingLetter;
 }
 
@@ -87,37 +100,55 @@ int _calculateLetterScore(String letter) {
     'z': 26
   };
   Map<String, int> upperCaseMap = {
-    'A': 1,
-    'B': 2,
-    'C': 3,
-    'D': 4,
-    'E': 5,
-    'F': 6,
-    'G': 7,
-    'H': 8,
-    'I': 9,
-    'J': 10,
-    'K': 11,
-    'L': 12,
-    'M': 13,
-    'N': 14,
-    'O': 15,
-    'P': 16,
-    'Q': 17,
-    'R': 18,
-    'S': 19,
-    'T': 20,
-    'U': 21,
-    'V': 22,
-    'W': 23,
-    'X': 24,
-    'Y': 25,
-    'Z': 26
+    'A': 27,
+    'B': 28,
+    'C': 29,
+    'D': 30,
+    'E': 31,
+    'F': 32,
+    'G': 33,
+    'H': 34,
+    'I': 35,
+    'J': 36,
+    'K': 37,
+    'L': 38,
+    'M': 39,
+    'N': 40,
+    'O': 41,
+    'P': 42,
+    'Q': 43,
+    'R': 44,
+    'S': 45,
+    'T': 46,
+    'U': 47,
+    'V': 48,
+    'W': 49,
+    'X': 50,
+    'Y': 51,
+    'Z': 52
   };
 
+  //checks lowercase map for match and assigns score
   if (lowerCaseMap.containsKey(letter)) {
-    score = lowerCaseMap.;
+    score = lowerCaseMap[letter]!;
   }
 
+  //checks uppercase map for match and assigns score
+  if (upperCaseMap.containsKey(letter)) {
+    score = upperCaseMap[letter]!;
+  }
+
+  log('$score');
   return score;
+}
+
+//Calculate totoal score
+int _calculateTotalScore() {
+  int totalScore = 0;
+
+  for (RuckSack ruck in ruckList) {
+    totalScore += ruck.score;
+  }
+  log('Total score: $totalScore');
+  return totalScore;
 }

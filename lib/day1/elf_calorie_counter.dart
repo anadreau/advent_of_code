@@ -59,7 +59,7 @@ Future<Elf> sortElf() async {
   }));
   var reversedList = sortedElfs.reversed;
   for (Elf elf in reversedList) {
-    //log('Elf ID: ${elf.id} with total calories: ${elf.calories}');
+    log('Elf ID: ${elf.id} with total calories: ${elf.calories}');
   }
   //log('${sortedElfs.first.id} and ${sortedElfs.first.calories}');
   return reversedList.first;
