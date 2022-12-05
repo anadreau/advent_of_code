@@ -20,13 +20,29 @@ void readRuckFile() async {
   try {
     //parse the string in half
     await for (var line in lines) {
+      int i = 1;
       int linelength = line.length;
       int lineMiddle = (linelength ~/ 2);
       var compartment1 = line.substring(0, (linelength ~/ 2));
       var compartment2 = line.substring(lineMiddle, linelength);
       //log('Compartment1 contains: $compartment1\nCompartment2 contains: $compartment2');
       String letter = _compareCompartments(compartment1, compartment2);
-      String lettersThree = _compareThreeRucks(line);
+
+      String line1 = '';
+      String line2 = '';
+      String line3 = '';
+
+      if (i == 1) {
+        line1 = line;
+      }
+      if (i == 2) {
+        line2 = line;
+      }
+      if (i == 3) {
+        line3 = line;
+        String lettersThree = _compareThreeRucks(line1, line2, line3);
+      }
+
       RuckSack ruck = RuckSack(
           ruckId: ruckId,
           matchingLetter: letter,
@@ -70,25 +86,22 @@ String _compareCompartments(String compartment1, String compartment2) {
 }
 
 //compare Three elves rucks for matching characters
-String _compareThreeRucks(String line) {
+String _compareThreeRucks(String line1, String line2, String line3) {
   String matchingLetter = '';
 
-  int i;
+  int x;
   int y;
-  var list1 = compartment1.split('');
-  var list2 = compartment2.split('');
-  var list1Length = list1.length;
-  var list2Length = list2.length;
-  //log('${list1.length}');
-  //log('${list2.length}');
+  int z;
 
-  for (i = 0; i < list1Length; i++) {
+  for (x = 0; x < line1.length; x++) {
     //log('i is $i');
-    for (y = 0; y < list2Length; y++) {
+    for (y = 0; y < line2.length; y++) {
       //log('y is $y');
       //log('list1 at i is ${list1[i]} and list 2 at y is ${list2[y]}');
-      if (list1[i] == list2[y]) {
-        matchingLetter = list1[i];
+      for (z = 0; z < line3.length; z++) {
+        if (line1[x] == line2[y] && line1[x] == line3[z]) {
+          matchingLetter = line1[x];
+        }
       }
     }
   }
