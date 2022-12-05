@@ -26,6 +26,7 @@ void readRuckFile() async {
       var compartment2 = line.substring(lineMiddle, linelength);
       //log('Compartment1 contains: $compartment1\nCompartment2 contains: $compartment2');
       String letter = _compareCompartments(compartment1, compartment2);
+      String lettersThree = _compareThreeRucks(line);
       RuckSack ruck = RuckSack(
           ruckId: ruckId,
           matchingLetter: letter,
@@ -43,6 +44,33 @@ void readRuckFile() async {
 
 //compare both strings for matching characters
 String _compareCompartments(String compartment1, String compartment2) {
+  String matchingLetter = '';
+
+  int i;
+  int y;
+  var list1 = compartment1.split('');
+  var list2 = compartment2.split('');
+  var list1Length = list1.length;
+  var list2Length = list2.length;
+  //log('${list1.length}');
+  //log('${list2.length}');
+
+  for (i = 0; i < list1Length; i++) {
+    //log('i is $i');
+    for (y = 0; y < list2Length; y++) {
+      //log('y is $y');
+      //log('list1 at i is ${list1[i]} and list 2 at y is ${list2[y]}');
+      if (list1[i] == list2[y]) {
+        matchingLetter = list1[i];
+      }
+    }
+  }
+  log(matchingLetter);
+  return matchingLetter;
+}
+
+//compare Three elves rucks for matching characters
+String _compareThreeRucks(String line) {
   String matchingLetter = '';
 
   int i;
