@@ -2,11 +2,16 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io' as io;
 
+import 'package:advent_2022/day3/badge.dart';
 import 'package:advent_2022/day3/rucksack_model.dart';
 
 int finalSum = 0;
+int finalSumThrees = 0;
 int ruckId = 1;
+int badgeId = 1;
+int lineId = 1;
 List ruckList = <RuckSack>[];
+List badgeList = <Badge>[];
 
 //read the file
 
@@ -20,7 +25,7 @@ void readRuckFile() async {
   try {
     //parse the string in half
     await for (var line in lines) {
-      int i = 1;
+      log('LineID at start $lineId');
       int linelength = line.length;
       int lineMiddle = (linelength ~/ 2);
       var compartment1 = line.substring(0, (linelength ~/ 2));
@@ -32,23 +37,40 @@ void readRuckFile() async {
       String line2 = '';
       String line3 = '';
 
-      if (i == 1) {
+      if (lineId == 1) {
         line1 = line;
+        log('Line1 $lineId');
       }
-      if (i == 2) {
+      if (lineId == 2) {
         line2 = line;
+        log('Line2 $lineId');
       }
-      if (i == 3) {
+      if (lineId == 3) {
+        log('Line3 beginning $lineId');
         line3 = line;
         String lettersThree = _compareThreeRucks(line1, line2, line3);
+        log(lettersThree);
+        int badgeScore = await _calculateLetterScore(lettersThree);
+        log('$badgeScore');
+        Badge badge = Badge(
+          id: badgeId,
+          letter: lettersThree,
+          badgeScore: badgeScore,
+        );
+        badgeList.add(badge);
+        lineId = 0;
+        log('Line3 end $lineId');
       }
 
       RuckSack ruck = RuckSack(
           ruckId: ruckId,
           matchingLetter: letter,
-          score: _calculateLetterScore(letter));
+          score: await _calculateLetterScore(letter));
       ruckList.add(ruck);
       ruckId++;
+      lineId++;
+      log('LineId after ++ $lineId');
+
       //log('$ruck');
     }
   } catch (e) {
@@ -56,6 +78,9 @@ void readRuckFile() async {
   }
 
   _calculateTotalScore();
+  _calculateTotalScoreThrees();
+  log('${badgeList.length}');
+  log('Badges: $finalSumThrees');
 }
 
 //compare both strings for matching characters
@@ -81,7 +106,7 @@ String _compareCompartments(String compartment1, String compartment2) {
       }
     }
   }
-  log(matchingLetter);
+  //log(matchingLetter);
   return matchingLetter;
 }
 
@@ -98,9 +123,15 @@ String _compareThreeRucks(String line1, String line2, String line3) {
     for (y = 0; y < line2.length; y++) {
       //log('y is $y');
       //log('list1 at i is ${list1[i]} and list 2 at y is ${list2[y]}');
-      for (z = 0; z < line3.length; z++) {
-        if (line1[x] == line2[y] && line1[x] == line3[z]) {
-          matchingLetter = line1[x];
+      if (line1[x] == line2[y]) {
+        for (z = 0; z < line3.length; z++) {
+          if (line1[x] == line2[y] &&
+              line1[x] == line3[z] &&
+              line2[y] == line3[z]) {
+            matchingLetter = line1[x];
+            log('x = ${line1[x]}, y = ${line2[x]}, z = ${line3[x]}');
+            break;
+          }
         }
       }
     }
@@ -110,7 +141,7 @@ String _compareThreeRucks(String line1, String line2, String line3) {
 }
 
 //calculate points based on character priority
-int _calculateLetterScore(String letter) {
+Future<int> _calculateLetterScore(String letter) async {
   int score = 0;
   Map<String, int> lowerCaseMap = {
     'a': 1,
@@ -179,7 +210,7 @@ int _calculateLetterScore(String letter) {
     score = upperCaseMap[letter]!;
   }
 
-  log('$score');
+  //log('$score');
   return score;
 }
 
@@ -190,6 +221,17 @@ int _calculateTotalScore() {
   for (RuckSack ruck in ruckList) {
     totalScore += ruck.score;
   }
-  log('Total score: $totalScore');
+  //log('Total score: $totalScore');
+  return totalScore;
+}
+
+//Calculate totoal score for badges
+int _calculateTotalScoreThrees() {
+  int totalScore = 0;
+
+  for (Badge badge in badgeList) {
+    totalScore += badge.badgeScore;
+  }
+  log('Total badge score: $totalScore');
   return totalScore;
 }
