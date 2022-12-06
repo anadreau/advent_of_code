@@ -12,6 +12,9 @@ int badgeId = 1;
 int lineId = 1;
 List ruckList = <RuckSack>[];
 List badgeList = <Badge>[];
+String line1 = '';
+String line2 = '';
+String line3 = '';
 
 //read the file
 
@@ -33,12 +36,9 @@ void readRuckFile() async {
       //log('Compartment1 contains: $compartment1\nCompartment2 contains: $compartment2');
       String letter = _compareCompartments(compartment1, compartment2);
 
-      String line1 = '';
-      String line2 = '';
-      String line3 = '';
-
       if (lineId == 1) {
         line1 = line;
+        log(line1);
         log('Line1 $lineId');
       }
       if (lineId == 2) {
@@ -48,7 +48,7 @@ void readRuckFile() async {
       if (lineId == 3) {
         log('Line3 beginning $lineId');
         line3 = line;
-        String lettersThree = _compareThreeRucks(line1, line2, line3);
+        String lettersThree = await _compareThreeRucks(line1, line2, line3);
         log(lettersThree);
         int badgeScore = await _calculateLetterScore(lettersThree);
         log('$badgeScore');
@@ -69,6 +69,7 @@ void readRuckFile() async {
       ruckList.add(ruck);
       ruckId++;
       lineId++;
+      badgeId++;
       log('LineId after ++ $lineId');
 
       //log('$ruck');
@@ -77,9 +78,10 @@ void readRuckFile() async {
     log('$e');
   }
 
-  _calculateTotalScore();
-  _calculateTotalScoreThrees();
-  log('${badgeList.length}');
+  finalSum = _calculateTotalScore();
+  finalSumThrees = _calculateTotalScoreThrees();
+  log('BadgeList length ${badgeList.length}');
+  log('Badgelist contains:\n $badgeList');
   log('Badges: $finalSumThrees');
 }
 
@@ -111,26 +113,31 @@ String _compareCompartments(String compartment1, String compartment2) {
 }
 
 //compare Three elves rucks for matching characters
-String _compareThreeRucks(String line1, String line2, String line3) {
+Future<String> _compareThreeRucks(
+    String line1, String line2, String line3) async {
+  log('Made it to compareThreeRucks');
+  log('$line1 \n$line2\n$line3');
   String matchingLetter = '';
 
   int x;
   int y;
   int z;
+  int one = line1.length;
+  int two = line2.length;
+  int three = line3.length;
 
-  for (x = 0; x < line1.length; x++) {
+  for (x = 0; x < one; x++) {
     //log('i is $i');
-    for (y = 0; y < line2.length; y++) {
+    for (y = 0; y < two; y++) {
       //log('y is $y');
       //log('list1 at i is ${list1[i]} and list 2 at y is ${list2[y]}');
       if (line1[x] == line2[y]) {
-        for (z = 0; z < line3.length; z++) {
+        for (z = 0; z < three; z++) {
           if (line1[x] == line2[y] &&
               line1[x] == line3[z] &&
               line2[y] == line3[z]) {
             matchingLetter = line1[x];
-            log('x = ${line1[x]}, y = ${line2[x]}, z = ${line3[x]}');
-            break;
+            log('x = ${line1[x]}, y = ${line2[y]}, z = ${line3[z]}');
           }
         }
       }
