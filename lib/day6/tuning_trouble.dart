@@ -20,21 +20,15 @@ Future<int> packetFinder() async {
   try {
     await for (var line in lines) {
       log('line Length ${line.length}');
-      for (int i = 0; i < line.length - 4; i++) {
-        String workingLine = line.substring(i, i + 4);
-
-        log(workingLine);
-
-        for (var x = 0; x < workingLine.length; x++) {
-          for (var y = 0 + 1; y < workingLine.length; y++) {
-            var search = workingLine.indexOf(workingLine[x], y);
-            log('$search');
-            if (x = 1 && search == -1) {
-              code = i + 4;
-              log('Code is $code');
-              break;
-            }
-          }
+      for (int i = 0; i < line.length - 14; i++) {
+        String workingLine = line.substring(i, i + 14);
+        var search = workingLine.split('').toSet().toList();
+        //log('${search.length}');
+        //log('$search');
+        if (search.length == 14) {
+          code = i + 14;
+          log('$code');
+          break;
         }
 
         // for (var a = 0; a < list.length; a++) {
