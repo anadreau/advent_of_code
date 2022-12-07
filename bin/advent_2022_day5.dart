@@ -1,2 +1,6 @@
 //day 5
-void main() {}
+import 'package:advent_2022/day5/supply_stacks.dart';
+
+void main() {
+  supplyStackMover();
+}
