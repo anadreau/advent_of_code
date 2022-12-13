@@ -43,6 +43,7 @@ void supplyStackMover() async {
 }
 
 //move letter from column to column
+// ignore: unused_element
 void _moveInstructions(int move, int from, int to) {
   //add to new column
   for (int i = move; i > 0; i--) {
