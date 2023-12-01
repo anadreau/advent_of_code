@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io' as io;
 
-import 'package:advent_2022/day4/cleaning_elf_model.dart';
+import 'package:advent_of_code/2022/day4/cleaning_elf_model.dart';
 
 final file = io.File('lib/data/cleaning.txt');
 int overlappingSections = 0;

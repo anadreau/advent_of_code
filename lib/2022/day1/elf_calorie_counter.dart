@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io' as io;
 
-import 'package:advent_2022/day1/elf_model.dart';
+import 'package:advent_of_code/2022/day1/elf_model.dart';
 
 //generate list from elfs.txt
 Future<List<Elf>> _generateList() async {

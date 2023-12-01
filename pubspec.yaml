@@ -1,6 +1,6 @@
-name: advent_2022
-description: A sample command-line application.
-version: 1.0.0
+name: advent_of_code
+description: Dart project to solve https://adventofcode.com December puzzles
+version: 1.0.1
 # homepage: https://www.example.com
 
 environment:
