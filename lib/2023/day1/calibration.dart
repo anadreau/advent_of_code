@@ -14,8 +14,8 @@ final file = io.File('lib/2023/day1/calibration_doc.txt');
 Future<int> calibrationResolver() async {
   Stream<String> lines =
       file.openRead().transform(utf8.decoder).transform(LineSplitter());
-  collateLines(lines);
-  callibrateList(rawList);
+  List lineList = await collateLines(lines);
+  callibrateList(lineList);
 
   log('$calibratedList');
   return returnSum(calibratedList);
