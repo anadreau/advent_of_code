@@ -9,7 +9,7 @@ List dirList = ['/'];
 void spaceCalculator() async {
   var lines = file.openRead().transform(utf8.decoder).transform(LineSplitter());
   var rx = RegExp(r'd\+');
-  List workingDirectory = [];
+  //List workingDirectory = [];
   //iterate through lines
   await for (var line in lines) {
     var lineParser = line.split(' ');

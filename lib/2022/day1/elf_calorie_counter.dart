@@ -9,7 +9,7 @@ Future<List<Elf>> _generateList() async {
   List<Elf> elfList = [];
   List<int> items = [];
   int elfId = 1;
-  final file = io.File('lib/data/elfs.txt');
+  final file = io.File('lib/2022/data/elfs.txt');
 
   //Read elfText.txt file by line
   Stream<String> lines =
