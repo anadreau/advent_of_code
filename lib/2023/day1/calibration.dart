@@ -1,29 +1,16 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:io' as io;
 
-List rawList = [];
 List calibratedList = [];
 int calibationSum = 0;
 List iList = [];
 int workingInt = 0;
-RegExp findInt = RegExp(r'([0-9]{1})');
-final file = io.File('lib/2023/day1/calibration_doc.txt');
-
-//bring in data from file
-Future<int> calibrationResolver() async {
-  Stream<String> lines =
-      file.openRead().transform(utf8.decoder).transform(LineSplitter());
-  List lineList = await collateLines(lines);
-  callibrateList(lineList);
-
-  log('$calibratedList');
-  return returnSum(calibratedList);
-}
+RegExp findNumber =
+    RegExp(r"one|two|three|four|five|six|seven|eight|nine|[0-9]{1}");
 
 //return that sum from list of two digit numbers
 int returnSum(List calibratedList) {
   for (int num in calibratedList) {
+    log('math check $calibationSum + $num');
     calibationSum = calibationSum + num;
   }
   log('CalibrationSum: $calibationSum');
@@ -31,31 +18,52 @@ int returnSum(List calibratedList) {
   return calibationSum;
 }
 
-//add lines to list
-Future<List> collateLines(Stream<String> lines) async {
-  try {
-    //log('try');
-    await for (var line in lines) {
-      //log('Line: $line');
-      if (line.isNotEmpty) {
-        rawList.add(line);
-      }
-
-      //get sum of all two digit numbers
-    }
-  } catch (e) {
-    log('Error: $e');
-  }
-  return rawList;
-}
-
 List callibrateList(List rawList) {
+  log('Line Count: ${rawList.length.toString()}');
   //parse each line and pull the first digit and the last digit
   for (String item in rawList) {
-    //log('item: $item');
-    Iterable<Match> foundInt = findInt.allMatches(item);
+    log('item: $item');
+    Iterable<Match> foundInt = findNumber.allMatches(item);
     for (Match i in foundInt) {
-      iList.add(i[0]);
+      log('${i[0]}');
+      if (i[0] == 'one') {
+        iList.add('1');
+      }
+      if (i[0] == 'two') {
+        iList.add('2');
+      }
+      if (i[0] == 'three') {
+        iList.add('3');
+      }
+      if (i[0] == 'four') {
+        iList.add('4');
+      }
+      if (i[0] == 'five') {
+        iList.add('5');
+      }
+      if (i[0] == 'six') {
+        iList.add('6');
+      }
+      if (i[0] == 'seven') {
+        iList.add('7');
+      }
+      if (i[0] == 'eight') {
+        iList.add('8');
+      }
+      if (i[0] == 'nine') {
+        iList.add('9');
+      }
+      if (i[0] == '1' ||
+          i[0] == '2' ||
+          i[0] == '3' ||
+          i[0] == '4' ||
+          i[0] == '5' ||
+          i[0] == '6' ||
+          i[0] == '7' ||
+          i[0] == '8' ||
+          i[0] == '9') {
+        iList.add(i[0]);
+      }
     }
     int listLength = iList.length;
     //log('length: $listLength');
