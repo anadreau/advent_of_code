@@ -24,47 +24,106 @@ List callibrateList(List rawList) {
   for (String item in rawList) {
     log('item: $item');
     Iterable<Match> foundInt = findNumber.allMatches(item);
-    for (Match i in foundInt) {
-      log('${i[0]}');
-      if (i[0] == 'one') {
+    //find first match in item and add to iList after converting to number
+    // RegExpMatch? firstInt = findNumber.firstMatch(item);
+    // if (firstInt != null) {
+    //   if (firstInt[0] == 'one') {
+    //     iList.add('1');
+    //   }
+    //   if (firstInt[0] == 'two') {
+    //     iList.add('2');
+    //   }
+    //   if (firstInt[0] == 'three') {
+    //     iList.add('3');
+    //   }
+    //   if (firstInt[0] == 'four') {
+    //     iList.add('4');
+    //   }
+    //   if (firstInt[0] == 'five') {
+    //     iList.add('5');
+    //   }
+    //   if (firstInt[0] == 'six') {
+    //     iList.add('6');
+    //   }
+    //   if (firstInt[0] == 'seven') {
+    //     iList.add('7');
+    //   }
+    //   if (firstInt[0] == 'eight') {
+    //     iList.add('8');
+    //   }
+    //   if (firstInt[0] == 'nine') {
+    //     iList.add('9');
+    //   }
+    //   if (firstInt[0] == '1' ||
+    //       firstInt[0] == '2' ||
+    //       firstInt[0] == '3' ||
+    //       firstInt[0] == '4' ||
+    //       firstInt[0] == '5' ||
+    //       firstInt[0] == '6' ||
+    //       firstInt[0] == '7' ||
+    //       firstInt[0] == '8' ||
+    //       firstInt[0] == '9') {
+    //     iList.add(firstInt[0]);
+    //   }
+    // }
+    //find last number in item and add to iList after converting to number
+    switch (item) {
+      case 'one':
         iList.add('1');
-      }
-      if (i[0] == 'two') {
+        break;
+      case 'two':
         iList.add('2');
-      }
-      if (i[0] == 'three') {
+        break;
+      case 'three':
         iList.add('3');
-      }
-      if (i[0] == 'four') {
+        break;
+      case 'four':
         iList.add('4');
-      }
-      if (i[0] == 'five') {
+        break;
+      case 'five':
         iList.add('5');
-      }
-      if (i[0] == 'six') {
+        break;
+      case 'six':
         iList.add('6');
-      }
-      if (i[0] == 'seven') {
+        break;
+      case 'seven':
         iList.add('7');
-      }
-      if (i[0] == 'eight') {
+        break;
+      case 'eight':
         iList.add('8');
-      }
-      if (i[0] == 'nine') {
+        break;
+      case 'nine':
         iList.add('9');
-      }
-      if (i[0] == '1' ||
-          i[0] == '2' ||
-          i[0] == '3' ||
-          i[0] == '4' ||
-          i[0] == '5' ||
-          i[0] == '6' ||
-          i[0] == '7' ||
-          i[0] == '8' ||
-          i[0] == '9') {
-        iList.add(i[0]);
-      }
+        break;
+      case '1':
+        iList.add('1');
+        break;
+      case '2':
+        iList.add('2');
+        break;
+      case '3':
+        iList.add('3');
+        break;
+      case '4':
+        iList.add('4');
+        break;
+      case '5':
+        iList.add('5');
+        break;
+      case '6':
+        iList.add('6');
+        break;
+      case '7':
+        iList.add('7');
+        break;
+      case '8':
+        iList.add('8');
+        break;
+      case '9':
+        iList.add('9');
+        break;
     }
+
     int listLength = iList.length;
     //log('length: $listLength');
     String firstNum = iList[0];
