@@ -7,7 +7,7 @@ final file = io.File('lib/2023/day1/test_doc.txt');
 
 void main() async {
   List raw = await fileInputCapture(file);
-  List calibrated = callibrateList(raw);
+  List calibrated = calibrateNumbers(raw);
   int calibrationSum = returnSum(calibrated);
   io.stdout.writeln('Sum of Calibration numbers is: $calibrationSum');
 }

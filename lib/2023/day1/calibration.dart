@@ -2,10 +2,15 @@ import 'dart:developer';
 
 List calibratedList = [];
 int calibationSum = 0;
-List iList = [];
+String firstNumber = '';
+String secondNumber = '';
 int workingInt = 0;
+String workingString1 = '';
+String workingString2 = '';
+bool fisrtWordMatch = false;
+bool secondWordMatch = false;
 RegExp findNumber =
-    RegExp(r"one|two|three|four|five|six|seven|eight|nine|[0-9]{1}");
+    RegExp('r(one|two|three|four|five|six|seven|eight|nine|[0-9])');
 
 //return that sum from list of two digit numbers
 int returnSum(List calibratedList) {
@@ -18,126 +23,55 @@ int returnSum(List calibratedList) {
   return calibationSum;
 }
 
-List callibrateList(List rawList) {
-  log('Line Count: ${rawList.length.toString()}');
+List calibrateNumbers(List rawList) {
+  //log('Line Count: ${rawList.length.toString()}');
   //parse each line and pull the first digit and the last digit
   for (String item in rawList) {
-    log('item: $item');
-    Iterable<Match> foundInt = findNumber.allMatches(item);
-    //find first match in item and add to iList after converting to number
-    // RegExpMatch? firstInt = findNumber.firstMatch(item);
-    // if (firstInt != null) {
-    //   if (firstInt[0] == 'one') {
-    //     iList.add('1');
-    //   }
-    //   if (firstInt[0] == 'two') {
-    //     iList.add('2');
-    //   }
-    //   if (firstInt[0] == 'three') {
-    //     iList.add('3');
-    //   }
-    //   if (firstInt[0] == 'four') {
-    //     iList.add('4');
-    //   }
-    //   if (firstInt[0] == 'five') {
-    //     iList.add('5');
-    //   }
-    //   if (firstInt[0] == 'six') {
-    //     iList.add('6');
-    //   }
-    //   if (firstInt[0] == 'seven') {
-    //     iList.add('7');
-    //   }
-    //   if (firstInt[0] == 'eight') {
-    //     iList.add('8');
-    //   }
-    //   if (firstInt[0] == 'nine') {
-    //     iList.add('9');
-    //   }
-    //   if (firstInt[0] == '1' ||
-    //       firstInt[0] == '2' ||
-    //       firstInt[0] == '3' ||
-    //       firstInt[0] == '4' ||
-    //       firstInt[0] == '5' ||
-    //       firstInt[0] == '6' ||
-    //       firstInt[0] == '7' ||
-    //       firstInt[0] == '8' ||
-    //       firstInt[0] == '9') {
-    //     iList.add(firstInt[0]);
-    //   }
-    // }
-    //find last number in item and add to iList after converting to number
-    switch (item) {
-      case 'one':
-        iList.add('1');
-        break;
-      case 'two':
-        iList.add('2');
-        break;
-      case 'three':
-        iList.add('3');
-        break;
-      case 'four':
-        iList.add('4');
-        break;
-      case 'five':
-        iList.add('5');
-        break;
-      case 'six':
-        iList.add('6');
-        break;
-      case 'seven':
-        iList.add('7');
-        break;
-      case 'eight':
-        iList.add('8');
-        break;
-      case 'nine':
-        iList.add('9');
-        break;
-      case '1':
-        iList.add('1');
-        break;
-      case '2':
-        iList.add('2');
-        break;
-      case '3':
-        iList.add('3');
-        break;
-      case '4':
-        iList.add('4');
-        break;
-      case '5':
-        iList.add('5');
-        break;
-      case '6':
-        iList.add('6');
-        break;
-      case '7':
-        iList.add('7');
-        break;
-      case '8':
-        iList.add('8');
-        break;
-      case '9':
-        iList.add('9');
-        break;
+    ///Split each item into characters
+    List splitItem = item.split('');
+
+    ///take splitItem list and reverse to find match at end of String
+    List reversedSplitItem = splitItem.reversed.toList();
+
+    ///variables to handle below for loop
+    secondWordMatch = false;
+    fisrtWordMatch = false;
+    workingString1 = '';
+    workingString2 = '';
+
+    ///adds letter until match found going from left to right
+    for (String c in splitItem) {
+      if (fisrtWordMatch == false) {
+        workingString1 = workingString1 + c;
+        var foundString1 = findNumber.firstMatch(workingString1);
+        //find first word match from left to right of string
+        if (foundString1?[0] != null) {
+          firstNumber = foundString1![0].toString();
+          fisrtWordMatch = true;
+        }
+      }
     }
 
-    int listLength = iList.length;
-    //log('length: $listLength');
-    String firstNum = iList[0];
-    //log('1st: $firstNum');
-    String lastNum = iList[listLength - 1];
-    //log('last: $lastNum');
+    ///adds letters from a reversed list left to right to find last match
+    for (String c in reversedSplitItem) {
+      if (secondWordMatch = false) {
+        workingString2 = c + workingString2;
+        var foundString2 = findNumber.firstMatch(workingString2);
+        //find first word match from left to right of string
+        if (foundString2?[0] != null) {
+          secondNumber = foundString2![0].toString();
+          secondWordMatch = true;
+        }
+      }
+    }
 
-    //combine the two digits into a two digit number
-    workingInt = int.parse(firstNum + lastNum);
-    log('workingInt: ${workingInt.toString()}');
-    //add two digit numbers to a list
-    calibratedList.add(workingInt);
-    iList.clear();
-    workingInt = 0;
+    String calibratedNumber = combineNumbers(firstNumber, secondNumber);
+    calibratedList.add(int.parse(calibratedNumber));
   }
   return calibratedList;
+}
+
+///Combines the two numbers
+String combineNumbers(String num1, String num2) {
+  return num1 + num2;
 }
