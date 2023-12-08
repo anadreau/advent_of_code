@@ -1,4 +1,7 @@
-
+RegExp gameCapture = RegExp(r'Game\s+(\d+)');
+RegExp blueCapture = RegExp(r'\d+(\sblue)');
+RegExp redCapture = RegExp(r'\d+(\sred)');
+RegExp greenCapture = RegExp(r'\d+(\sgreen)');
 //Parse input
 
 //split line
