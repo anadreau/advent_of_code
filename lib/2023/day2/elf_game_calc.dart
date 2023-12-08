@@ -1,9 +1,17 @@
+import 'package:advent_of_code/2023/day2/game_model.dart';
+
 RegExp gameCapture = RegExp(r'Game\s+(\d+)');
 RegExp blueCapture = RegExp(r'\d+(\sblue)');
 RegExp redCapture = RegExp(r'\d+(\sred)');
 RegExp greenCapture = RegExp(r'\d+(\sgreen)');
-//Parse input
 
+//Parse input
+ElfGame parseLines(List raw) {
+  ElfGame elfGame;
+  for (String line in raw) {
+    gameCapture.firstMatch(line);
+  }
+}
 //split line
 
 //capture game number
