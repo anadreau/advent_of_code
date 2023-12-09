@@ -18,7 +18,8 @@ List<ElfGame> parseLines(List raw) {
     blueCount = 0;
     greenCount = 0;
     redCount = 0;
-    int gameId = int.parse(gameCapture.firstMatch(line).toString());
+    RegExpMatch? gameIdMatch = gameCapture.firstMatch(line);
+    int gameId = int.parse(gameIdMatch![0].toString());
     //capture blue count and find total
     var blueList = blueCapture.allMatches(line);
     for (var blue in blueList) {
