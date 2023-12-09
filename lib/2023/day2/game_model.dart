@@ -1,8 +1,8 @@
 class ElfGame {
-  final int gameID;
-  final int blueCount;
-  final int redCount;
-  final int greenCount;
+  int gameID;
+  int blueCount;
+  int redCount;
+  int greenCount;
 
   ElfGame({
     required this.gameID,
