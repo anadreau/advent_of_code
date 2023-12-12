@@ -1,6 +1,6 @@
 import 'dart:io' as io;
 
-import 'package:advent_of_code/2023/day2/elf_game_calc.dart';
+import 'package:advent_of_code/2023/day2/elf_game_calc_part1.dart';
 import 'package:advent_of_code/2023/day2/game_model.dart';
 import 'package:advent_of_code/2023/utils/file_io.dart';
 

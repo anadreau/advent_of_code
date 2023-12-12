@@ -72,9 +72,9 @@ int getGameSum(
     if (game.blueCount <= blueMax &&
         game.greenCount <= greenMax &&
         game.redCount <= redMax) {
-      log('Sum $gameSum plus GameID ${game.gameID} ');
+      //log('Sum $gameSum plus GameID ${game.gameID} ');
       gameSum = gameSum + game.gameID;
-      log('Eqauls $gameSum');
+      //log('Eqauls $gameSum');
     }
   }
   //return sum of all passing gameID as answer
